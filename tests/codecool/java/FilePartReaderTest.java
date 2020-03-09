@@ -10,10 +10,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class FilePartReaderTest {
 
     @Test
-    void setupTestError() throws IllegalArgumentException {
+    void setupFromLineIsLessThemToLineTestError() throws IllegalArgumentException {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             FilePartReader filePartReader = new FilePartReader();
             filePartReader.setup("tests/codecool/java/test1.txt", 5, 2);
+        });
+    }
+
+    @Test
+    void setupToLineIsLessNeededTestError() throws IllegalArgumentException {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            FilePartReader filePartReader = new FilePartReader();
+            filePartReader.setup("tests/codecool/java/test1.txt", 0, 2);
         });
     }
 
