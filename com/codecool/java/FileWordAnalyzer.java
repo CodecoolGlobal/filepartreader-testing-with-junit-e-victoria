@@ -1,6 +1,7 @@
 package codecool.java;
 
 import java.io.IOException;
+import java.security.spec.RSAOtherPrimeInfo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,15 +11,17 @@ public class FileWordAnalyzer {
 
     public FileWordAnalyzer(FilePartReader filePartReader) {
         this.filePartReader = filePartReader;
-        this.filePartReader.setup("com/codecool/resources/file.txt", 1, 1);
+        this.filePartReader.setup("tests/codecool/java/test1.txt", 1, 5);
     }
 
     private List<String> getWordsList(String text) {
-        String[] splittedText = text.split(" ");
+        String[] splittedText = text.split("[ .,:;!]");
         List<String> wordsList = new ArrayList<>();
         for (String word: splittedText) {
-            word = word.replaceAll("[.,:;!]", "").toLowerCase();
-            wordsList.add(word);
+            word = word.toLowerCase();
+            if (word.length() > 0) {
+                wordsList.add(word);
+            }
         }
         return wordsList;
     }
@@ -47,7 +50,8 @@ public class FileWordAnalyzer {
         String text = this.filePartReader.readLines();
         List<String> wordsList = getWordsList(text);
         for (String word: wordsList) {
-            if (word.equals(new StringBuffer(word).reverse().toString())) {
+            if (word.equals(new StringBuffer(word).reverse().toString()) && word.length() > 1) {
+                System.out.println(word);
                 result.add(word);
             }
         }
